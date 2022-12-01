@@ -4,8 +4,12 @@ import Dummy from "./Dummy";
 import SolutionLetters from "./SolutionLetters";
 import ErrorLetters from "./ErrorLetters";
 import Form from "./Form";
+import Footer from "./Footer";
+import Instructions from "./Instructions";
+import Options from "./Options";
 // states
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 // api
 import getWordFromApi from "../services/api";
 // styles
@@ -59,16 +63,28 @@ function App() {
       <Header />
       <main className="main">
         <section>
-          <SolutionLetters word={word} userLetters={userLetters} />
-          <ErrorLetters word={word} userLetters={userLetters} />
-          <Form
-            lastLetter={lastLetter}
-            handleKeyDown={handleKeyDown}
-            handleChange={handleChange}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                <SolutionLetters word={word} userLetters={userLetters} />
+                <ErrorLetters word={word} userLetters={userLetters} />
+                <Form
+                  lastLetter={lastLetter}
+                  handleKeyDown={handleKeyDown}
+                  handleChange={handleChange}
+                />
+                </>
+              }
+            />
+            <Route path="/instructions" element={<Instructions />} />
+            <Route path="/options" element={<Options />} />
+          </Routes>
         </section>
         <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
+      <Footer />
     </div>
   );
 }
